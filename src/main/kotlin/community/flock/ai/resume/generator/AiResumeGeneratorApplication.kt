@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class AiResumeGeneratorApplication
 
 fun main(args: Array<String>) {
-	runApplication<AiResumeGeneratorApplication>(*args)
+    runApplication<AiResumeGeneratorApplication>(*args)
 }
