@@ -1,4 +1,6 @@
-Add following environment variables
+# AI Resume Generator
 
-export SPRING_AI_AZURE_OPENAI_API_KEY=<INSERT KEY HERE>
-export SPRING_AI_AZURE_OPENAI_ENDPOINT=<INSERT ENDPOINT URL HERE>
+## Getting started
+
+- Set a valid API key as the `SPRING_AI_OPENAI_API_KEY` environment variable
+- Run `AiResumeGeneratorApplication`
