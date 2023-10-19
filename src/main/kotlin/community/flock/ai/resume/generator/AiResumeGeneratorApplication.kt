@@ -1,4 +1,4 @@
-package community.flock.resume
+package community.flock.ai.resume.generator
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
