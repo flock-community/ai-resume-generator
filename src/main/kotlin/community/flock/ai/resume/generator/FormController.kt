@@ -24,5 +24,5 @@ class FormController(val promptService: PromptService) {
 }
 
 data class Prompt(
-    val content: String
+    val content: String,
 )
