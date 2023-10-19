@@ -1,12 +1,9 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Getting Started: Handling Form Submission</title>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-</head>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{layoutFile :: layout(~{::#content})}">
 <body>
-<h1>Result</h1>
-<p th:text="'ChatGpt says: ' + ${prompt.content}"/>
-<a href="/prompt">Submit another message</a>
+<div id="content">
+    <p th:text="${prompt.content}"></p>
+    <a href="/prompt">Submit another message</a>
+</div>
 </body>
 </html>
