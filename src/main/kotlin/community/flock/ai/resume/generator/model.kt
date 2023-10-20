@@ -23,4 +23,10 @@ data class DbFlocker(
 }
 
 fun Flocker.toDbModel() =
-    DbFlocker(firstName = firstName, lastName = lastName, dateOfBirth = dateOfBirth, phoneNumber = phoneNumber)
+    DbFlocker(
+        id = "1",
+        firstName = firstName,
+        lastName = lastName,
+        dateOfBirth = dateOfBirth,
+        phoneNumber = phoneNumber
+    )

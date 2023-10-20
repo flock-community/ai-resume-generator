@@ -2,7 +2,7 @@ PUT localhost:8080/flocker
 Content-Type: application/json
 
 {
-        "firstName": "A",
+        "firstName": "Florian",
         "lastName": "B",
         "dateOfBirth": "DOB",
         "phoneNumber": 0
