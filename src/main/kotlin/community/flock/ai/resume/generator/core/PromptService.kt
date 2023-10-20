@@ -1,5 +1,6 @@
-package community.flock.ai.resume.generator
+package community.flock.ai.resume.generator.core
 
+import community.flock.ai.resume.generator.core.model.GenerateResumeExperienceItemRequest
 import org.springframework.ai.client.AiClient
 import org.springframework.ai.client.Generation
 import org.springframework.ai.prompt.Prompt
@@ -16,20 +17,22 @@ class PromptService(
     @Value("classpath:/prompts/resume-experience-item.st")
     private lateinit var systemResource: Resource
 
-    fun generateResumeExperienceItem(): Generation {
+    fun generateResumeExperienceItem(request: GenerateResumeExperienceItemRequest): Generation {
         val systemPromptTemplate = SystemPromptTemplate(systemResource)
         val systemMessage = systemPromptTemplate.createMessage(
-            mapOf(
-                "company_name" to "DHL",
-                "period" to "Started april this year, still working there",
-                "technologies_used" to "Java, Spring, Netty, TCP, Kafka, AVRO",
-                "other_information" to "Interface with devices over TCP sockets, create adapter to have uniform API for different devices",
-            ),
+            with(request) {
+                mapOf(
+                    "company_name" to companyName,
+                    "period" to period,
+                    "technologies_used" to technologiesUsed,
+                    "other_information" to otherInformation,
+                )
+            },
         )
         val prompt = Prompt(systemMessage)
 
-        val response = aiClient.generate(prompt).generation
+        val response = aiClient.generate(prompt)
 
-        return response
+        return response.generation
     }
 }
