@@ -12,13 +12,13 @@ data class DbFlocker(
     val firstName: String?,
     val lastName: String?,
     val dateOfBirth: String?,
-    val phoneNumber: Int?
+    val phoneNumber: Int?,
 ) {
     constructor() : this(
         firstName = null,
         lastName = null,
         dateOfBirth = null,
-        phoneNumber = null
+        phoneNumber = null,
     )
 }
 
@@ -28,5 +28,5 @@ fun Flocker.toDbModel() =
         firstName = firstName,
         lastName = lastName,
         dateOfBirth = dateOfBirth,
-        phoneNumber = phoneNumber
+        phoneNumber = phoneNumber,
     )

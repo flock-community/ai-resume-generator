@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class FlockerController(val flockerService: FlockerService){
+class FlockerController(val flockerService: FlockerService) {
 
     @PutMapping("/flocker")
     fun store(@RequestBody flocker: Flocker): Flocker = flockerService.store(flocker)
@@ -24,7 +24,6 @@ class FlockerService(val flockerRepository: FlockerRepository) {
 }
 
 @Repository
-interface FlockerRepository: PagingAndSortingRepository<DbFlocker, Long> {
+interface FlockerRepository : PagingAndSortingRepository<DbFlocker, Long> {
     fun save(flocker: DbFlocker)
 }
-
