@@ -1,5 +1,7 @@
-package community.flock.ai.resume.generator
+package community.flock.ai.resume.generator.api
 
+import community.flock.ai.resume.generator.core.PromptService
+import community.flock.ai.resume.generator.core.model.GenerateResumeExperienceItemRequest
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,10 +19,19 @@ class FormController(val promptService: PromptService) {
 
     @PostMapping("/prompt")
     fun postPrompt(@ModelAttribute prompt: Prompt, model: Model): String {
-        val result = Prompt(promptService.generateResumeExperienceItem().text)
+        val result = Prompt(generateFixedItem().text)
         model.addAttribute("prompt", result)
         return "result"
     }
+
+    private fun generateFixedItem() = promptService.generateResumeExperienceItem(
+        GenerateResumeExperienceItemRequest(
+            companyName = "DHL",
+            period = "Last year",
+            technologiesUsed = "TypeScript, React",
+            otherInformation = "Built a frontend",
+        ),
+    )
 }
 
 data class Prompt(
