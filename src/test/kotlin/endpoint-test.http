@@ -1,0 +1,7 @@
+PUT localhost:8080/flocker
+
+{
+        firstName: "A",
+        lastName: "B",
+        dateOfBirth: "DOB"
+}

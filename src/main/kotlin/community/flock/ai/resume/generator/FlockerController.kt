@@ -1,25 +1,29 @@
+package community.flock.ai.resume.generator
+
+import community.flock.wirespec.generated.Flocker
+import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.stereotype.Controller
 import org.springframework.stereotype.Repository
-import java.util.Date
+import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.PutMapping
 
 @Controller
-FlockerController(val flockerService: FlockerService)
+class FlockerController(val flockerService: FlockerService){
 
+    @PutMapping("/flocker")
+    fun store(flocker: Flocker): Flocker = flockerService.store(flocker)
+}
+
+@Service
 class FlockerService(val flockerRepository: FlockerRepository) {
-    fun store(flocker: FlockerData){
-        flockerRepository.store()
+    fun store(flocker: Flocker): Flocker {
+        flockerRepository.save(flocker.toDbModel())
+        return flocker
     }
-
-    data class FlockerData (
-        val firstName: String,
-        val lastName: String,
-        val dateOfBirth: Date
-    )
-
 }
 
 @Repository
-class FlockerRepository: PagingAndSortingRepository<Crag, Long>{
-
+interface FlockerRepository: PagingAndSortingRepository<DbFlocker, Long> {
+    fun save(flocker: DbFlocker)
 }
 
