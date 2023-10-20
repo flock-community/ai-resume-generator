@@ -35,4 +35,10 @@ class PromptService(
 
         return response.generation
     }
+
+    fun sendSimpleMessage(message: String) =
+        Prompt(message)
+            .let { aiClient.generate(it) }
+            .generation
+            .text
 }
