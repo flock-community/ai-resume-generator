@@ -55,7 +55,7 @@ class PromptService(
         val response = openAI
             .chatCompletion(request)
             .choices
-            .first
+            .first()
             .message
         println("message = $response")
         messages.add(response)
