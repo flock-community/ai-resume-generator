@@ -1,4 +1,4 @@
-PUT localhost:8080/flocker
+PUT localhost:8080/api/flocker
 Content-Type: application/json
 
 {

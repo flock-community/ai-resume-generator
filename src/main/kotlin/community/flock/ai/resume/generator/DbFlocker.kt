@@ -12,7 +12,7 @@ data class DbFlocker(
     val firstName: String?,
     val lastName: String?,
     val dateOfBirth: String?,
-    val phoneNumber: Int?,
+    val phoneNumber: String?,
 ) {
     constructor() : this(
         firstName = null,

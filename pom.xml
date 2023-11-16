@@ -97,9 +97,6 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
 
                 <configuration>
-                    <sourceDirs>
-                        <sourceDir>${project.build.directory}/generated-sources/kotlin</sourceDir>
-                    </sourceDirs>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
@@ -118,7 +115,7 @@
             <plugin>
                 <groupId>community.flock.wirespec.plugin.maven</groupId>
                 <artifactId>wirespec-maven-plugin</artifactId>
-                <version>0.8.9</version>
+                <version>0.8.25</version>
                 <executions>
                     <execution>
                         <id>kotlin</id>
@@ -140,7 +137,7 @@
                         </goals>
                         <configuration>
                             <input>${project.basedir}/src/main/wirespec</input>
-                            <output>${project.build.directory}/typescript</output>
+                            <output>${project.basedir}/src/main/react/src/api</output>
                             <languages>
                                 <language>TypeScript</language>
                             </languages>

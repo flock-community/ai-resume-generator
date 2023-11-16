@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api")
 class FlockerController(val flockerService: FlockerService) {
 
     @PutMapping("/flocker")
@@ -18,6 +20,7 @@ class FlockerController(val flockerService: FlockerService) {
 @Service
 class FlockerService(val flockerRepository: FlockerRepository) {
     fun store(flocker: Flocker): Flocker {
+        println(flocker.toDbModel())
         flockerRepository.save(flocker.toDbModel())
         return flocker
     }
