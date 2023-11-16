@@ -1,4 +1,4 @@
-package community.flock.ai.resume.generator
+package community.flock.ai.resume.generator.Flocker
 
 import community.flock.wirespec.generated.Flocker
 import jakarta.persistence.Entity

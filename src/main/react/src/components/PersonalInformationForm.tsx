@@ -3,11 +3,10 @@ import {Flocker} from "../api/types.ts";
 
 export const PersonalInformationForm = () => {
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
-    const onSubmit = data => {
-        console.log(data);
-        saveFlocker(data)
+    const onSubmit = async (flocker: Flocker) => {
+        console.log(flocker);
+        await saveFlocker(flocker)
     };
-    console.log(watch("example"));
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -34,7 +33,7 @@ export function saveFlocker(flocker: Flocker) {
         method: 'PUT',
         headers: {
             accept: "application/json",
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(flocker)
     };
