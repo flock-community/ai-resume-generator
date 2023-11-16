@@ -72,6 +72,17 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.aallam.openai</groupId>
             <artifactId>openai-client-jvm</artifactId>
             <version>3.5.0</version>
@@ -95,6 +106,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
@@ -111,7 +123,39 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>community.flock.wirespec.plugin.maven</groupId>
+                <artifactId>wirespec-maven-plugin</artifactId>
+                <version>0.8.25</version>
+                <executions>
+                    <execution>
+                        <id>kotlin</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/src/main/wirespec</input>
+                            <output>${project.build.directory}/generated-sources/kotlin</output>
+                            <languages>
+                                <language>Kotlin</language>
+                            </languages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>typescript</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/src/main/wirespec</input>
+                            <output>${project.basedir}/src/main/react/src/api</output>
+                            <languages>
+                                <language>TypeScript</language>
+                            </languages>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
 </project>
