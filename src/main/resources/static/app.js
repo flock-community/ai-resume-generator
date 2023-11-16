@@ -54,4 +54,10 @@ $(() => {
     sendMessage();
   });
 
+  document.querySelector('#messageInput').addEventListener('keypress',
+      function (e) {
+        if (e.key === 'Enter') {
+          sendMessage()
+        }
+      });
 });
