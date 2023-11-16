@@ -1,5 +1,7 @@
+import {PersonalInformationForm} from "../components/PersonalInformationForm.tsx";
+
 export function PersonalInformation() {
     return (
-        <div>Hier komt een form component</div>
+        <PersonalInformationForm />
     )
 }
