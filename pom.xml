@@ -31,6 +31,7 @@
     </repositories>
 
     <dependencies>
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -38,7 +39,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
         <dependency>
@@ -56,6 +57,7 @@
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
 
+        <!-- Kotlin -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
@@ -65,12 +67,7 @@
             <artifactId>kotlin-stdlib</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
+        <!-- OpenAI -->
         <dependency>
             <groupId>com.aallam.openai</groupId>
             <artifactId>openai-client-jvm</artifactId>
@@ -81,6 +78,13 @@
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-apache5-jvm</artifactId>
             <version>2.3.2</version>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

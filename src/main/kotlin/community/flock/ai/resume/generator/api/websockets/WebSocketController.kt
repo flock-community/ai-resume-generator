@@ -1,6 +1,7 @@
 package community.flock.ai.resume.generator.api.websockets
 
 import community.flock.ai.resume.generator.core.PromptService
+import community.flock.ai.resume.generator.core.model.Message
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import org.springframework.messaging.handler.annotation.MessageMapping
@@ -17,13 +18,7 @@ class WebSocketController(
     fun hello(message: String): Message {
         logger.info("Received message, message = {}", message)
 
-        val answer = runBlocking { promptService.sendSimpleMessage(message) }
-
-        return Message(
-            """
-            You asked: "$message". ChatGPT answered: "$answer"
-            """.trimIndent(),
-        )
+        return runBlocking { promptService.processUserInput(message) }
     }
 
     companion object {
