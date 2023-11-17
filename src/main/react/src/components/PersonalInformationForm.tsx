@@ -2,14 +2,10 @@ import {useForm} from "react-hook-form";
 import {Flocker} from "../api/types.ts";
 
 export const PersonalInformationForm = () => {
-    const {register, handleSubmit, watch, formState: {errors}} = useForm();
-    const onSubmit = async (flocker: Flocker) => {
-        console.log(flocker);
-        await saveFlocker(flocker)
-    };
+    const {register, handleSubmit, formState: {errors}} = useForm();
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(data => saveFlocker(data))}>
             <div>
                 First Name <input defaultValue="Al" {...register("firstName", {required: true})} />
             </div>
