@@ -1,22 +1,27 @@
-package community.flock.ai.resume.generator.core
+package community.flock.ai.resume.generator.core.conversation
 
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
-import com.aallam.openai.api.chat.ChatRole
+import com.aallam.openai.api.chat.ChatRole.Companion.Assistant
+import com.aallam.openai.api.chat.ChatRole.Companion.Function
+import com.aallam.openai.api.chat.ChatRole.Companion.System
+import com.aallam.openai.api.chat.ChatRole.Companion.User
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import community.flock.ai.resume.generator.core.function.createJobDescriptionItem
-import community.flock.ai.resume.generator.core.model.Message
-import community.flock.ai.resume.generator.core.model.MessageType
+import community.flock.ai.resume.generator.core.resume.WorkExperienceItemService
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.springframework.stereotype.Component
 
 @Component
 class PromptService(
     private val openAI: OpenAI,
+    private val workExperienceItemService: WorkExperienceItemService,
 ) {
     private val messages: MutableList<ChatMessage> = mutableListOf(
         ChatMessage(
-            ChatRole.System,
+            System,
             content = """
                 You are helping write a resume for a software developer, specifically a list of previous job descriptions. Each item should include at least the following things:
 
@@ -42,7 +47,7 @@ class PromptService(
     )
 
     suspend fun processUserInput(message: String): Message {
-        val chatMessage = ChatMessage(role = ChatRole.User, content = message)
+        val chatMessage = ChatMessage(role = User, content = message)
 
         messages.add(chatMessage)
 
@@ -57,20 +62,48 @@ class PromptService(
             .choices
             .first()
             .message
+
         println("message = $response")
+
         messages.add(response)
 
-        return response.toDomain()
+        val processedResponse = response.processResponse()
+
+        return response.toDomain(processedResponse)
     }
 
-    fun ChatMessage.toDomain() = Message(
+    fun ChatMessage.toDomain(message: String) = Message(
         type = when (role) {
-            ChatRole.System -> MessageType.AGENT
-            ChatRole.User -> MessageType.USER
-            ChatRole.Assistant -> MessageType.AGENT
-            ChatRole.Function -> MessageType.AGENT
+            User -> MessageType.USER
+            System, Assistant, Function -> MessageType.AGENT
             else -> error("Unknown role")
         },
-        contents = this.content ?: "Function called",
+        contents = message,
     )
+
+    fun ChatMessage.processResponse(): String = when {
+        content != null -> content!!
+        functionCall != null -> processFunctionCall()
+        else -> error("Message contains neither content nor a function call")
+    }
+
+    fun ChatMessage.processFunctionCall(): String {
+        functionCall?.let {
+            val args = it.argumentsAsJson()
+
+            when (it.name) {
+                createJobDescriptionItem.name ->
+                    workExperienceItemService.create(
+                        args.getStringValue("employerName"),
+                        args.getStringValue("period"),
+                        args.getStringValue("technologiesUsed"),
+                        args.getStringValue("summary"),
+                    )
+            }
+
+            return "Function called"
+        } ?: error("Attempted to process function call, but functionCall is null")
+    }
+
+    fun JsonObject.getStringValue(key: String) = this[key]?.jsonPrimitive?.content ?: ""
 }
