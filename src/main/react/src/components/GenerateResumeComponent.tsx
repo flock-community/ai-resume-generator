@@ -1,12 +1,18 @@
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import {useEffect, useState} from "react";
+import ChatBox from "./ChatBox.tsx";
+
+export type Message = {
+    contents: string;
+    type: "AGENT" | "USER" | "NOTIFICATION"
+}
 
 export const GenerateResumeComponent = () => {
     const [client, setClient] = useState<CompatClient>()
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
-    const appendMessage = (newMessage: string) => {
+    const appendMessage = (newMessage: Message) => {
         setMessages((messages) => [...messages, newMessage])
     }
     const connect: () => void = () => {
@@ -16,7 +22,7 @@ export const GenerateResumeComponent = () => {
         stompClient.connect({}, frame => {
             console.log(`Connected: ${frame}`);
             stompClient.subscribe(`/topic/${topicName}`, response => {
-                let newMessage = JSON.parse(response.body).contents;
+                let newMessage: Message = JSON.parse(response.body)
                 appendMessage(newMessage)
             });
         });
@@ -41,13 +47,13 @@ export const GenerateResumeComponent = () => {
             />
             <button onClick={() => {
                 sendMessage(message)
-                setMessages([...messages, message])
-            }}>Send</button>
-            <ul>
-                {messages.map((message, index) => (
-                    <li key={index}> {message}</li>
-                ))}
-            </ul>
-    </>)
+                setMessages([...messages, {
+                    type: "USER",
+                    contents: message
+                }])
+            }}>Send
+            </button>
+            <ChatBox messages={messages} />
+        </>)
 }
 
