@@ -45,3 +45,20 @@ button[disabled] {
 .prompt-container {
   margin: 20px 0 10px 0;
 }
+
+#messages > li {
+  padding: 10px;
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+#messages > li.me {
+  background: blueviolet;
+  color: white;
+  margin-left: 20px;
+}
+
+#messages > li.bot {
+  background: white;
+  margin-right: 20px;
+}
