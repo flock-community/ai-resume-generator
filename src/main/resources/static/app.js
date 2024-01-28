@@ -20,6 +20,7 @@ const connect = () => {
     console.log(`Connected: ${frame}`);
     stompClient.subscribe(`/topic/${topicName}`, response => {
       showMessage(JSON.parse(response.body).contents);
+      $("#waiting").hide();
     });
   });
 };
@@ -40,9 +41,11 @@ const sendMessage = () => {
       message
   )
   $('#messageInput').val("")
+  $('#waiting').show();
 }
 
 $(() => {
+  $("#waiting").hide();
   $("form").on('submit', e => e.preventDefault());
   $("#connect").click(() => {
     connect();
