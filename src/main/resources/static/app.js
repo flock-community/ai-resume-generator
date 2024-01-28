@@ -8,9 +8,12 @@ const setConnected = connected => {
   $("#messageInput").prop("disabled", !connected);
 };
 
-const showMessage = message => {
-  $("#messages").append(`<li>${message}</li>`);
+const showMessage = (message, actor) => {
+  const converted = convertLineEndings(message)
+  $("#waiting").before(`<li class="${actor}">${converted}</li>`);
 };
+
+const convertLineEndings = message => message.replace(/\n/g, "<br>")
 
 const connect = () => {
   const socket = new WebSocket("ws://localhost:8080/chat")
@@ -19,7 +22,7 @@ const connect = () => {
     setConnected(true);
     console.log(`Connected: ${frame}`);
     stompClient.subscribe(`/topic/${topicName}`, response => {
-      showMessage(JSON.parse(response.body).contents);
+      showMessage(JSON.parse(response.body).contents, "bot");
       $("#waiting").hide();
     });
   });
@@ -41,12 +44,16 @@ const sendMessage = () => {
       message
   )
   $('#messageInput').val("")
+  showMessage(message, "me")
   $('#waiting').show();
 }
 
 $(() => {
   $("#waiting").hide();
   $("form").on('submit', e => e.preventDefault());
+
+  connect();
+
   $("#connect").click(() => {
     connect();
   });

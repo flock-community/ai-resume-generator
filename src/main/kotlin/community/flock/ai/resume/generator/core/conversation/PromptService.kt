@@ -9,6 +9,7 @@ import com.aallam.openai.api.chat.ChatRole.Companion.User
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import community.flock.ai.resume.generator.core.function.createJobDescriptionItem
+import community.flock.ai.resume.generator.core.resume.WorkExperienceItem
 import community.flock.ai.resume.generator.core.resume.WorkExperienceItemService
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -91,19 +92,28 @@ class PromptService(
         functionCall?.let {
             val args = it.argumentsAsJson()
 
-            when (it.name) {
+            return when (it.name) {
                 createJobDescriptionItem.name ->
                     workExperienceItemService.create(
                         args.getStringValue("employerName"),
                         args.getStringValue("period"),
                         args.getStringValue("technologiesUsed"),
                         args.getStringValue("summary"),
-                    )
+                    ).toResponseString()
+                else -> error("Unknown function name")
             }
-
-            return "Function called"
         } ?: error("Attempted to process function call, but functionCall is null")
     }
 
     fun JsonObject.getStringValue(key: String) = this[key]?.jsonPrimitive?.content ?: ""
 }
+
+// TODO: This doesn't belong here
+fun WorkExperienceItem.toResponseString() = """
+    I created a work experience item!
+    
+    Employer: $employerName
+    Period: $period
+    Technologies used: $technologiesUsed
+    Summary: $summary
+""".trimIndent()

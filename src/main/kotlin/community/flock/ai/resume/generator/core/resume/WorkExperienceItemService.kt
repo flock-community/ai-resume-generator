@@ -12,15 +12,13 @@ class WorkExperienceItemService(
         period: String,
         technologiesUsed: String,
         summary: String,
-    ) {
-        WorkExperienceItem(
-            employerName,
-            period,
-            technologiesUsed,
-            summary,
-        ).let {
-            workExperienceItemRepositoryAdapter.save(it)
-        }
+    ) = WorkExperienceItem(
+        employerName,
+        period,
+        technologiesUsed,
+        summary,
+    ).let {
+        workExperienceItemRepositoryAdapter.save(it)
     }
 
     fun findAll() = workExperienceItemRepositoryAdapter.findAll()
