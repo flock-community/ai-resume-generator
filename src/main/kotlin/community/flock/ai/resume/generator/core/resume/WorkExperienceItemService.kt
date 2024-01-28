@@ -22,4 +22,6 @@ class WorkExperienceItemService(
             workExperienceItemRepositoryAdapter.save(it)
         }
     }
+
+    fun findAll() = workExperienceItemRepositoryAdapter.findAll()
 }

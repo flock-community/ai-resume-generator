@@ -11,15 +11,12 @@ class WorkExperienceItemRepositoryAdapterImpl(
 
     override fun save(item: WorkExperienceItem) =
         item
-            .mapToEntity()
+            .toEntity()
             .let {
                 workExperienceItemRepository.save(it)
             }
-}
+            .toDomain()
 
-private fun WorkExperienceItem.mapToEntity() = WorkExperienceItemEntity(
-    employerName = employerName,
-    period = period,
-    technologiesUsed = technologiesUsed,
-    summary = summary,
-)
+    override fun findAll(): List<WorkExperienceItem> =
+        workExperienceItemRepository.findAll().map { it.toDomain() }
+}

@@ -1,8 +1,8 @@
 package community.flock.ai.resume.generator.core.resume
 
-import community.flock.ai.resume.generator.db.resume.WorkExperienceItemEntity
-
 interface WorkExperienceItemRepositoryAdapter {
 
-    fun save(item: WorkExperienceItem): WorkExperienceItemEntity
+    fun save(item: WorkExperienceItem): WorkExperienceItem
+
+    fun findAll(): List<WorkExperienceItem>
 }
