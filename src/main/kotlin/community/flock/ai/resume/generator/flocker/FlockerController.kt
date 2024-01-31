@@ -1,4 +1,4 @@
-package community.flock.ai.resume.generator.Flocker
+package community.flock.ai.resume.generator.flocker
 
 import community.flock.wirespec.generated.Flocker
 import org.springframework.web.bind.annotation.PutMapping

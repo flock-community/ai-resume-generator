@@ -24,13 +24,41 @@ input[type="text"] {
   width: 100%;
   padding: 10px;
   border: none;
+  color: blueviolet;
+  font-size: large;
 }
 
-input[type="submit"] {
+button[type="submit"] {
   padding: 10px;
   background-color: blueviolet;
   border-radius: 0;
   box-shadow: none;
   border: none;
   color: white;
+}
+
+button[disabled] {
+  background-color: dimgrey;
+  color: darkgrey;
+}
+
+.prompt-container {
+  margin: 20px 0 10px 0;
+}
+
+#messages > li {
+  padding: 10px;
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+#messages > li.me {
+  background: blueviolet;
+  color: white;
+  margin-left: 20px;
+}
+
+#messages > li.bot {
+  background: white;
+  margin-right: 20px;
 }

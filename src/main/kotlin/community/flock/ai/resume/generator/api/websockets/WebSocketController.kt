@@ -1,7 +1,7 @@
 package community.flock.ai.resume.generator.api.websockets
 
-import community.flock.ai.resume.generator.core.PromptService
-import community.flock.ai.resume.generator.core.model.Message
+import community.flock.ai.resume.generator.core.conversation.Message
+import community.flock.ai.resume.generator.core.conversation.PromptService
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import org.springframework.messaging.handler.annotation.MessageMapping

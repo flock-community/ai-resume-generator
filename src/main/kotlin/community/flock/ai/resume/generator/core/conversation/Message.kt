@@ -1,4 +1,4 @@
-package community.flock.ai.resume.generator.core.model
+package community.flock.ai.resume.generator.core.conversation
 
 data class Message(
     val type: MessageType,

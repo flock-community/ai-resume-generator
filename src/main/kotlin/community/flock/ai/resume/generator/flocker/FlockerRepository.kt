@@ -1,4 +1,4 @@
-package community.flock.ai.resume.generator.Flocker
+package community.flock.ai.resume.generator.flocker
 
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.stereotype.Repository
