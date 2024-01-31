@@ -3,6 +3,8 @@ import Root from "./routes/root.tsx";
 import ErrorPage from "./components/error-page.tsx";
 import {PersonalInformation} from "./routes/personal-information.tsx";
 import {GenerateResumeComponent} from "./components/GenerateResumeComponent.tsx";
+import '@fontsource/roboto/300.css';
+import {Stack, Typography} from "@mui/material";
 
 const router = createBrowserRouter([
         {
@@ -14,13 +16,18 @@ const router = createBrowserRouter([
             path: "/personal-information",
             element: <PersonalInformation/>
         },
-    {
-        path: "/generate-resume-item",
-        element: <GenerateResumeComponent/>
-    }
+        {
+            path: "/generate-resume-item",
+            element: <GenerateResumeComponent/>
+        }
     ]
 );
 
 export function App() {
-    return <RouterProvider router={router}/>
+    return (
+        <Stack>
+            <Typography variant="h1">ResumAide</Typography>
+            <RouterProvider router={router}/>
+        </Stack>
+    )
 }

@@ -1,17 +1,16 @@
-import {Card} from "@mui/material";
+import {Stack} from "@mui/material";
 import {Message} from "./GenerateResumeComponent.tsx";
+import ChatMessage from "./ChatMessage.tsx";
 
 type ChatBoxProps = {
     messages: Message[]
 }
 export default function ChatBox({messages} : ChatBoxProps) {
     return (
-        <Card>
-            <ul>{messages.map((message: Message, index) => (
-                <li style={{color: message.type == "AGENT" ? "green" : "red"}}
-                    key={index}>{message.type} says: {message.contents}</li>
+        <Stack spacing={2}>
+            {messages.map((message: Message, index) => (
+               <ChatMessage key={index} message={message} />
             ))}
-            </ul>
-        </Card>
+        </Stack>
     )
 }

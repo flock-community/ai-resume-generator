@@ -1,6 +1,8 @@
 import {CompatClient, Stomp} from "@stomp/stompjs";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import ChatBox from "./ChatBox.tsx";
+import {Box, IconButton, Input, Stack} from "@mui/material";
+import {Send} from "@mui/icons-material";
 
 export type Message = {
     contents: string;
@@ -19,7 +21,7 @@ export const GenerateResumeComponent = () => {
         const topicName = "chat";
         const socket = new WebSocket("ws://localhost:5173/chat")
         const stompClient = Stomp.over(socket)
-        stompClient.connect({}, frame => {
+        stompClient.connect({}, (frame: any) => {
             console.log(`Connected: ${frame}`);
             stompClient.subscribe(`/topic/${topicName}`, response => {
                 let newMessage: Message = JSON.parse(response.body)
@@ -37,23 +39,44 @@ export const GenerateResumeComponent = () => {
         )
     }
 
-    useEffect(() => connect(), [])
+    const handleSubmit = () => {
+        sendMessage(message)
+        setMessages([...messages, {
+            type: "USER",
+            contents: message
+        }])
+    }
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.code == "Enter") {
+            handleSubmit()
+        }
+    }
+
+    const disconnect = () => client?.disconnect()
+
+    useEffect(() => {
+        connect()
+        return () => disconnect()
+    }, [])
+
     return (
-        <>
-            <h1>Talk to ChatGPT:</h1>
-            <input
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-            />
-            <button onClick={() => {
-                sendMessage(message)
-                setMessages([...messages, {
-                    type: "USER",
-                    contents: message
-                }])
-            }}>Send
-            </button>
-            <ChatBox messages={messages} />
-        </>)
+        <Stack spacing={3}>
+            <ChatBox messages={messages}/>
+            <Box>
+                <Stack spacing={3} direction={"row"} padding={5}>
+                    <Input fullWidth={true}
+                           value={message}
+                           onChange={e => setMessage(e.target.value)}
+                           onSubmit={handleSubmit}
+                           onKeyDown={e => handleKeyDown(e)}
+                    />
+                    <IconButton aria-label="send" onClick={handleSubmit}>
+                        <Send />
+                    </IconButton>
+                </Stack>
+            </Box>
+        </Stack>
+    )
 }
 
